@@ -1,37 +1,81 @@
+"use client";
+
 import ThemeToggle from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
-import {
-    SignedIn,
-    SignedOut,
-    SignInButton,
-    UserButton,
-    useAuth
-} from "@clerk/nextjs";
+import BusinessSignupButton from "@/app/(landing)/_components/BusinessSignupButton";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
-    return (
-        <header className="bg-gray-300 text-black dark:bg-black dark:text-white p-4">
-            <div className="container mx-auto flex justify-between items-center">
-                <h1 className="text-xl font-bold">ADfluence</h1>
-                <nav>
-                    <ul className="flex space-x-4 gap-4">
-                        <li><a href="/" className="hover:underline">Home</a></li>
-                        <li><a href="/about" className="hover:underline">About</a></li>
-                        <li><a href="/contact" className="hover:underline">Contact</a></li>
-                    </ul>
-                </nav>
-                <div className="flex items-center space-x-4">
-                    <ThemeToggle />
-                    <SignedOut>
-                        <SignInButton>
-                            <Button variant="outline">Sign In</Button>
-                        </SignInButton>
-                    </SignedOut>
-                    <SignedIn>
-                        <UserButton/>
-                    </SignedIn>
-                </div>
-            </div>
-        </header>
-    )
+  const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [profile, setProfile] = useState<{
+    channelName: string;
+    profilePicture: string;
+  } | null>(null);
+
+  useEffect(() => {
+    const checkStatus = async () => {
+      const channelId = localStorage.getItem("channelId");
+      if (!channelId) return;
+
+      const res = await fetch(`/api/user-status`, {
+        headers: { "x-channel-id": channelId },
+      });
+
+      const data = await res.json();
+      if (data.isLoggedIn) {
+        setIsLoggedIn(true);
+
+        const profileRes = await fetch(`/api/user/profile?channelId=${channelId}`);
+        const profileData = await profileRes.json();
+
+        setProfile({
+          channelName: profileData.channelName,
+          profilePicture: profileData.profilePicture.replace("=s88", "=s800"),
+        });
+      }
+    };
+
+    checkStatus();
+  }, []);
+
+  const handleLogout = async () => {
+    await fetch("/api/logout", { method: "POST" });
+    localStorage.removeItem("channelId");
+    router.push("/");
+    window.location.reload();
+  };
+
+  return (
+    <header className="bg-gray-300 text-black dark:bg-black dark:text-white p-4">
+      <div className="container mx-auto flex justify-between items-center">
+        <h1 className="text-xl font-bold cursor-pointer" onClick={() => router.push("/")}>
+          ADfluence
+        </h1>
+        <nav>
+          <ul className="flex space-x-4 gap-4">
+            <li><a href="/" className="hover:underline">Home</a></li>
+            <li><a href="/about" className="hover:underline">About</a></li>
+            <li><a href="/contact" className="hover:underline">Contact</a></li>
+          </ul>
+        </nav>
+        <div className="flex items-center space-x-4">
+          <ThemeToggle />
+          {isLoggedIn && profile ? (
+              <Image
+                src={profile.profilePicture}
+                alt={profile.channelName}
+                width={40}
+                height={40}
+                className="rounded-full border border-gray-400 dark:border-gray-600"
+              />
+          ) : (
+            null
+          )}
+        </div>
+      </div>
+    </header>
+  );
 }

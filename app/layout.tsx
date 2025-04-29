@@ -27,19 +27,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return(
+  return (
     <ClerkProvider>
 
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {/* <Navbar/> */}
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <main>
+              {children}
+            </main>
+
+            <footer className="bg-gray-900 text-white text-center p-4">
+              <p>© {new Date().getFullYear()} ADfluence. All rights reserved.</p>
+            </footer>
+          </ThemeProvider>
+        </body>
+      </html>
 
     </ClerkProvider>
   );

@@ -1,24 +1,13 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
-import { useClerk } from "@clerk/nextjs";
-import React, { ReactNode } from 'react'
+import React, { ReactNode } from "react";
+import LogoutButton from "./_components/LogoutButton";
+import Navbar from "./_components/Navbar";
+import Sidebar from "./_components/Sidebar";
 
 export default function MainLayout({ children }: { children: ReactNode }) {
-
-    const { signOut } = useClerk();
-
-    const handleLogout = () => {
-        signOut({ redirectUrl: "/" }); // Redirects to landing page after logout
-    };
-
-
   return (
-    <div>MainLayout
-        <div>
-        <Button onClick={handleLogout} variant="destructive">Logout</Button>
-        </div>
-        {children}
+    <div className="min-h-screen flex bg-gray-300 text-black dark:bg-black dark:text-white">
+      <Sidebar />
+      {children}
     </div>
-  )
+  );
 }
