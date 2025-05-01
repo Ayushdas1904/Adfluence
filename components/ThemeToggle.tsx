@@ -50,7 +50,7 @@ export default function ThemeToggle() {
                 transition={{
                     type: "spring",
                     duration: 0.2,
-                    bounce: 0.2,
+                    bounce: 0.2,        
                 }}
             />
         </button>

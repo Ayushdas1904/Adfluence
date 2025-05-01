@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
       metadata: {
         creatorEmail,
         collaborationId, // 🔥 Include this for the webhook
+        paymentType: "collab", // store payment type for webhook
       },
     });
 

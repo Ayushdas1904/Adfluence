@@ -75,18 +75,19 @@ export async function GET(req: NextRequest) {
     let existingUser = await User.findOne({ channelId: channel.id });
 
     if (existingUser) {
-      await User.updateOne(
+      existingUser = await User.findOneAndUpdate(
         { channelId: channel.id },
         {
           $set: {
             ...updateData,
             isLoggedIn: true,
           },
-        }
+        },
+        { new: true } // returns the updated document directly
       );
-
-      // 💥 Fetch updated user again after updateOne
-      existingUser = await User.findOne({ channelId: channel.id });
+      
+      // // 💥 Fetch updated user again after updateOne
+      // existingUser = await User.findOne({ channelId: channel.id });
 
       // ✅ Redirect to profile if already completed
       if (existingUser.isProfileComplete) {

@@ -31,6 +31,7 @@ export async function GET(req: NextRequest) {
       subscriberCount: user.subscriberCount,
       viewCount: user.viewCount,
       videoCount: user.videoCount,
+      isPro: user.isPro,
     };
 
     console.log("Fetched user data:", userData);

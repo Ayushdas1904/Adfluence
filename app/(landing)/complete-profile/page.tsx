@@ -49,32 +49,32 @@ export default function CompleteProfile() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-16 p-6 bg-white dark:bg-gray-800 shadow-md rounded">
-      <h2 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">
+    <div className="min-h-[73vh] border max-w-md mx-auto mt-16 p-8 bg-gray-900 dark:bg-black shadow-xl rounded-lg">
+      <h2 className="text-3xl font-semibold mb-8 text-center text-gray-100 dark:text-white">
         Complete Your Profile
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <label className="block text-gray-700 dark:text-gray-300 font-medium">
-          Select Your Niche
-        </label>
-        <select
-          value={niche}
-          onChange={(e) => setNiche(e.target.value)}
-          className="w-full p-2 border rounded"
-        >
-          <option value="">Select your niche</option>
-          <option value="fitness">Fitness</option>
-          <option value="tech">Tech</option>
-          <option value="fashion">Fashion</option>
-          <option value="travel">Travel</option>
-          <option value="education">Education</option>
-        </select>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label className="block text-gray-200 dark:text-gray-300 font-medium">Select Your Niche</label>
+          <select
+            value={niche}
+            onChange={(e) => setNiche(e.target.value)}
+            className="w-full p-3 mt-2 bg-gray-800 dark:bg-gray-900 border border-gray-600 dark:border-gray-400 rounded-lg text-gray-100 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Select your niche</option>
+            <option value="fitness">Fitness</option>
+            <option value="tech">Tech</option>
+            <option value="fashion">Fashion</option>
+            <option value="travel">Travel</option>
+            <option value="education">Education</option>
+          </select>
+        </div>
 
         {error && <p className="text-red-500 text-sm">{error}</p>}
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300"
         >
           Save & Continue
         </button>

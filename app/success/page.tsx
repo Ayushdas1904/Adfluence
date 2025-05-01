@@ -9,8 +9,8 @@ export default function SuccessPage() {
       <p className="text-gray-700 dark:text-gray-300 mt-2 mb-6">
         Thank you! Your payment was processed successfully.
       </p>
-      <Link href="/main" className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
-        Go to Home
+      <Link href="/main/profile" className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+        Go to Dashboard
       </Link>
     </div>
   );

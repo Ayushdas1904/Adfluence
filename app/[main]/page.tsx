@@ -11,7 +11,7 @@ type Creator = {
   channelName: string;
   niche: string;
   subscriberCount: number;
-  viewCount: number;
+  viewCount: number;  
   profilePicture: string;
 };
 

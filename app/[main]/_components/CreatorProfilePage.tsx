@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
@@ -12,6 +14,7 @@ export default function CreatorProfilePage() {
     viewCount: string;
     videoCount: string;
     bio: string;
+    isPro: boolean; // Adding isPro to track pro status
   } | null>(null);
 
   const [collaborations, setCollaborations] = useState<any[]>([]);
@@ -120,8 +123,27 @@ export default function CreatorProfilePage() {
         >
           Logout
         </Button>
-      </div>
 
+        {/* Conditional Render for Pro Creator */}
+        {profile.isPro ? (
+          <div className="mt-4 self-center">
+            <div className="text-xl font-semibold text-yellow-500 bg-black p-2 rounded-lg">
+              Pro Creator 🌟
+            </div>
+          </div>
+        ) : (
+          <div className="mt-4 self-center">
+            <Button
+              className="bg-yellow-500 text-black font-bold hover:bg-yellow-600"
+              onClick={() => {
+                window.location.href = "/main/upgrade";
+              }}
+            >
+              Upgrade to Pro 🚀
+            </Button>
+          </div>
+        )}
+      </div>
 
       {/* Collaborations Section */}
       <div className="mt-8 bg-white border dark:bg-black p-6 rounded-xl shadow-md w-full">

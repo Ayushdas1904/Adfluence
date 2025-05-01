@@ -9,8 +9,13 @@
     refreshToken: { type: String, required: true },
     expiresAt: { type: Number, required: true }, // Store expiry timestamp
 
-    niche: { type: String, required: true }, // Niche of the creator (e.g., Gaming, Beauty, etc.)
+    niche: {
+      type: String,
+      default: "General",
+    },
 
+    isPro: { type: Boolean, default: false }, // Pro user status
+    
     // ✅ YouTube Insights
     subscriberCount: { type: String },
     viewCount: { type: String },
@@ -18,6 +23,6 @@
 
     // ✅ Login state
     isLoggedIn: { type: Boolean, default: false },
-  }, { strict: true, _id: false });
+  }, { strict: true});
 
   export const User = mongoose.models.User || mongoose.model("User", UserSchema);
