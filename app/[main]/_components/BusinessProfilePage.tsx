@@ -91,24 +91,24 @@ export default function BusinessProfilePage() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-gray-100 dark:bg-[#0b0b0b] px-6 py-10 transition-colors">
+    <div className="min-h-screen w-full bg-gray-50 dark:bg-[#121212] px-6 py-10 transition-colors">
       {/* Business Profile Content */}
       <div className="flex items-center justify-between mb-8">
         <div className="w-full mb-8 text-center ">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white">Business Dashboard</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
+          <h1 className="text-4xl font-semibold text-gray-900 dark:text-white">Business Dashboard</h1>
+          <p className="text-gray-700 dark:text-gray-300 mt-2">
             View your business information and verification status.
           </p>
         </div>
         <button
           onClick={handleLogout}
-          className="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded"
+          className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-md"
         >
           Logout
         </button>
       </div>
 
-      <div className="w-full bg-white dark:bg-[#1e1e1e] border border-gray-200 dark:border-gray-800 shadow-xl rounded-2xl p-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3 transition-all duration-300">
+      <div className="w-full bg-white dark:bg-[#1f1f1f] border border-gray-200 dark:border-gray-700 shadow-xl rounded-2xl p-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3 transition-all duration-300">
         <div className="space-y-1">
           <label className="text-sm font-medium text-gray-500 dark:text-gray-400">Business Name</label>
           <p className="text-lg font-semibold text-gray-900 dark:text-white">{business.name}</p>
@@ -123,7 +123,7 @@ export default function BusinessProfilePage() {
             href={business.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 dark:text-blue-400 hover:underline break-words"
+            className="text-yellow-600 dark:text-yellow-400 hover:underline break-words"
           >
             {business.website}
           </a>
@@ -136,8 +136,8 @@ export default function BusinessProfilePage() {
           <label className="text-sm font-medium text-gray-500 dark:text-gray-400">Verification Status </label>
           <span
             className={`inline-block rounded-full px-3 py-1 text-sm font-semibold ${business.verified
-              ? "bg-green-100 text-green-700 dark:bg-green-800 dark:text-green-200"
-              : "bg-yellow-100 text-yellow-700 dark:bg-yellow-800 dark:text-yellow-200"
+              ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-800 dark:text-yellow-200"
+              : "bg-yellow-200 text-yellow-700 dark:bg-yellow-700 dark:text-yellow-300"
               }`}
           >
             {business.verified ? "Verified ✅" : "Pending ⏳"}
@@ -149,13 +149,12 @@ export default function BusinessProfilePage() {
             href={business.document}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 dark:text-blue-400 hover:underline"
+            className="text-yellow-600 dark:text-yellow-400 hover:underline"
           >
             View Document 📄
           </a>
         </div>
       </div>
-
 
       {/* Collaborations Section */}
       <div className="mt-10">
@@ -183,9 +182,9 @@ export default function BusinessProfilePage() {
                   </div>
                   <span
                     className={`text-xs font-semibold px-2 py-1 rounded-full ${collab.status === "Completed"
-                      ? "bg-green-100 text-green-700 dark:bg-green-800 dark:text-green-200"
+                      ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-800 dark:text-yellow-200"
                       : collab.status === "In Progress"
-                        ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-800 dark:text-yellow-200"
+                        ? "bg-yellow-200 text-yellow-700 dark:bg-yellow-700 dark:text-yellow-300"
                         : "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
                       }`}
                   >
@@ -263,7 +262,6 @@ export default function BusinessProfilePage() {
                   )}
                 </div>
               </div>
-
             ))}
           </div>
         )}

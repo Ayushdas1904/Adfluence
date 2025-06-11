@@ -11,7 +11,7 @@ export async function GET(req: Request) {
 
     const query = niche ? { niche } : {};
 
-    const creators = await User.find(query).select("-_id channelName niche subscriberCount viewCount videoCount profilePicture channelId");
+    const creators = await User.find(query).select("-_id channelName niche subscriberCount viewCount videoCount profilePicture channelId isPro");
 
     return NextResponse.json(creators);
   } catch (error) {

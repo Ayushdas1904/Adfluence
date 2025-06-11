@@ -10,6 +10,7 @@ type Brand = {
   email: string;
   website: string;
   licenseNumber: string;
+  verified: boolean;
 };
 
 export default function OtherBrandProfile() {
@@ -36,61 +37,76 @@ export default function OtherBrandProfile() {
 
   if (!brand)
     return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-white dark:bg-black">
+      <div className="min-h-screen w-full flex items-center justify-center bg-[#0e0e0e]">
         <MessageLoading />
       </div>
     );
 
+  // Ensure website URL starts with https://
+  const websiteUrl = brand.website.startsWith("https://")
+    ? brand.website
+    : `https://${brand.website}`;
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-black px-4 py-10">
-      <div className="w-full max-w-xl p-6 rounded-2xl bg-white/20 dark:bg-white/10 backdrop-blur-xl border border-white/30 shadow-2xl relative overflow-hidden">
+    <div className="min-h-screen w-full flex items-center justify-center bg-[#0e0e0e] px-4 py-10">
+      <div className="w-full max-w-xl p-8 rounded-xl bg-[#1a1a1a] border border-gray-700 shadow-md">
 
-        {/* Gradient Border Overlay */}
-        <div className="absolute inset-0 rounded-2xl border-2 border-transparent bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 opacity-20 pointer-events-none z-0" />
+        <h1 className="text-3xl font-extrabold text-yellow-400 text-center mb-6">
+          {brand.name}
+        </h1>
 
-        <div className="relative z-10">
-          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-4 text-center">
-            {brand.name}
-          </h1>
-
-          <p className="text-gray-700 dark:text-gray-300 mb-2 text-center">
-            <span className="font-medium">Email:</span> {brand.email}
-          </p>
-
-          <p className="text-gray-700 dark:text-gray-300 mb-2 text-center">
-            <span className="font-medium">Website:</span>{" "}
-            <a
-              href={brand.website}
-              target="_blank"
-              className="text-blue-500 underline hover:text-blue-400"
-            >
-              {brand.website}
-            </a>
-          </p>
-
-          <p className="text-gray-700 dark:text-gray-300 mb-6 text-center">
-            <span className="font-medium">License:</span> {brand.licenseNumber}
-          </p>
-
-          <div className="flex justify-center gap-4">
-            <button
-              onClick={() =>
-                router.push(`/main/chat?creatorId=${creatorId}&brandId=${brandId}`)
-              }
-              className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 px-5 rounded-full shadow-md hover:opacity-90 transition"
-            >
-              Chat With Brand
-            </button>
-
-            <button
-              onClick={() =>
-                router.push(`/main/collaborate?creatorId=${creatorId}&brandId=${brandId}`)
-              }
-              className="bg-gradient-to-r from-green-500 to-teal-500 text-white font-semibold py-2 px-5 rounded-full shadow-md hover:opacity-90 transition"
-            >
-              Propose Collaboration
-            </button>
+        <div className="space-y-4 text-center">
+          <div className="flex justify-between items-center">
+            <p className="text-base text-gray-200">
+              <span className="font-medium text-gray-400">Email:</span> {brand.email}
+            </p>
+            <p className="text-base text-gray-200">
+              <span className="font-medium text-gray-400">Website:</span>{" "}
+              <a
+                href={websiteUrl} // Ensure it uses HTTPS
+                target="_blank"
+                className="text-yellow-400 underline hover:text-yellow-300 transition"
+              >
+                {brand.website}
+              </a>
+            </p>
           </div>
+
+          <div className="flex justify-between items-center">
+            <p className="text-base text-gray-200">
+              <span className="font-medium text-gray-400">License:</span> {brand.licenseNumber}
+            </p>
+            <p className="text-base text-gray-200">
+              <span className="font-medium text-gray-400">Verified:</span>{" "}
+              <span
+                className={`font-semibold ${
+                  brand.verified ? "text-green-400" : "text-red-600"
+                }`}
+              >
+                {brand.verified ? "Yes" : "No"}
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 flex justify-center flex-wrap gap-4">
+          <button
+            onClick={() =>
+              router.push(`/main/chat?creatorId=${creatorId}&brandId=${brandId}`)
+            }
+            className="bg-red-600 text-white font-semibold py-2 px-5 rounded-md hover:bg-red-500 transition"
+          >
+            Chat With Brand
+          </button>
+
+          <button
+            onClick={() =>
+              router.push(`/main/collaborate?creatorId=${creatorId}&brandId=${brandId}`)
+            }
+            className="bg-yellow-500 text-black font-semibold py-2 px-5 rounded-md hover:bg-yellow-400 transition"
+          >
+            Propose Collaboration
+          </button>
         </div>
       </div>
     </div>

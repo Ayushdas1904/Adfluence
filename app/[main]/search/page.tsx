@@ -123,9 +123,10 @@ export default function SearchPage() {
                                     <div
                                         key={idx}
                                         onClick={() => handleBrandClick(b._id)}
-                                        className="bg-gradient-to-br from-zinc-900 to-zinc-800 border border-zinc-700 p-5 rounded-2xl hover:shadow-xl hover:scale-[1.02] transition cursor-pointer text-white"
+                                        className=" bg-gradient-to-br from-zinc-900 to-zinc-800 border border-zinc-700 p-5 rounded-2xl hover:shadow-xl hover:scale-[1.02] transition cursor-pointer text-white"
                                     >
                                         <h2 className="text-2xl font-bold">{b.name}</h2>
+                                        
                                         <p className="text-sm mt-2">Email: {b.email}</p>
                                         <p className="text-sm">Website: {b.website}</p>
                                         <p className="text-sm">License #: {b.licenseNumber}</p>

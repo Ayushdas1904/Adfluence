@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 import { MessageLoading } from "@/components/ui/message-loading";
 
 interface UserData {
@@ -14,7 +15,7 @@ interface UserData {
   videoCount: number;
 }
 
-export default function OtherProfilePage() {
+export default function OtherCreatorProfilePage() {
   const searchParams = useSearchParams();
   const channelId = searchParams.get("creatorId");
   const brandId = searchParams.get("brandId");
@@ -54,64 +55,85 @@ export default function OtherProfilePage() {
     );
 
   if (!userData)
-    return <div className="p-4 text-red-500">User not found</div>;
+    return <div className="p-4 text-red-500 dark:text-red-400">User not found</div>;
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-white dark:bg-neutral-950 px-4 py-10">
-      <div className="w-full max-w-2xl rounded-xl border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-6 shadow-md dark:shadow-xl transition-colors duration-300">
-        <div className="flex items-center space-x-5">
+    <div className="flex flex-col min-h-screen w-full p-6 bg-white text-black dark:bg-black dark:text-white transition-colors duration-300">
+      {/* Header Title */}
+      <div className="text-4xl font-extrabold text-center mb-8 tracking-wide text-yellow-600 dark:text-yellow-400">
+        CREATOR'S PROFILE
+      </div>
+
+      {/* Profile Card */}
+      <div className="flex flex-wrap items-center justify-between gap-8 mb-8 w-full bg-gray-100 dark:bg-[#1a1a1a] p-6 rounded-xl shadow-xl">
+        {/* Left: Profile Info */}
+        <div className="flex items-center gap-6">
           <Image
-            src={userData.profilePicture}
+            src={userData.profilePicture.replace("=s88", "=s800")}
             alt="Profile"
-            width={72}
-            height={72}
-            className="rounded-full border border-neutral-300 dark:border-neutral-700"
+            width={120}
+            height={120}
+            className="rounded-full border-4 border-yellow-600 dark:border-yellow-500"
+            unoptimized
           />
-          <div>
-            <h1 className="text-xl font-semibold text-neutral-900 dark:text-white">
+          <div className="flex flex-col">
+            <h2 className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
               {userData.channelName}
-            </h1>
-            <p className="text-sm text-neutral-600 dark:text-gray-400">
-              {userData.subscriberCount} subscribers
-            </p>
+            </h2>
+            <div className="mt-4 flex space-x-8 text-sm">
+              <div>
+                <p className="font-semibold">{userData.subscriberCount}</p>
+                <p className="text-gray-600 dark:text-gray-400">Subscribers</p>
+              </div>
+              <div>
+                <p className="font-semibold">{userData.viewCount}</p>
+                <p className="text-gray-600 dark:text-gray-400">Views</p>
+              </div>
+              <div>
+                <p className="font-semibold">{userData.videoCount}</p>
+                <p className="text-gray-600 dark:text-gray-400">Videos</p>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
-        <div className="mt-5 space-y-1 text-sm text-neutral-700 dark:text-gray-300">
-          <p>
-            <span className="font-medium text-neutral-900 dark:text-white">Views:</span>{" "}
-            {userData.viewCount}
-          </p>
-          <p>
-            <span className="font-medium text-neutral-900 dark:text-white">Videos:</span>{" "}
-            {userData.videoCount}
-          </p>
-        </div>
+      {/* Actions Section */}
+      <div className="bg-gray-100 dark:bg-[#1c1c1c] border border-gray-300 dark:border-gray-700 p-6 rounded-xl shadow-md w-full space-y-4">
+        <h2 className="text-2xl font-bold mb-2 text-yellow-600 dark:text-yellow-400">
+          Take Action
+        </h2>
 
-        <div className="mt-8 grid gap-3">
-          <button
-            onClick={() =>
-              router.push(`/main/chat?creatorId=${channelId}&brandId=${brandId}`)
-            }
-            className="w-full bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 text-neutral-900 dark:text-white font-medium py-2 rounded-md transition"
-          >
-            Chat with Creator
-          </button>
-          <button
-            onClick={() =>
-              router.push(`/main/collaborate?creatorId=${channelId}&brandId=${brandId}`)
-            }
-            className="w-full bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 text-neutral-900 dark:text-white font-medium py-2 rounded-md transition"
-          >
-            Collaborate
-          </button>
-          <button
-            onClick={handleScheduleMeet}
-            className="w-full bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 text-neutral-900 dark:text-white font-medium py-2 rounded-md transition"
-          >
-            Schedule Google Meet
-          </button>
-        </div>
+        <Button
+          className="w-full bg-yellow-500 text-black font-bold hover:bg-yellow-600 rounded-lg shadow-md"
+          onClick={() =>
+            router.push(`/main/chat?creatorId=${channelId}&brandId=${brandId}`)
+          }
+        >
+          💬 Chat with Creator
+        </Button>
+        <Button
+          className="w-full bg-yellow-500 text-black font-bold hover:bg-yellow-600 rounded-lg shadow-md"
+          onClick={() =>
+            router.push(`/main/collaborate?creatorId=${channelId}&brandId=${brandId}`)
+          }
+        >
+          🤝 Collaborate
+        </Button>
+        <Button
+          className="w-full bg-yellow-500 text-black font-bold hover:bg-yellow-600 rounded-lg shadow-md"
+          onClick={handleScheduleMeet}
+        >
+          📅 Schedule Google Meet
+        </Button>
+        <Button
+          className="w-full bg-yellow-500 text-black font-bold hover:bg-yellow-600 rounded-lg shadow-md"
+          onClick={() =>
+            window.open(`https://www.youtube.com/channel/${userData.channelId}`, "_blank")
+          }
+        >
+          ▶️ Visit YouTube Channel
+        </Button>
       </div>
     </div>
   );

@@ -4,15 +4,15 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { MessageLoading } from "@/components/ui/message-loading";
 
-
 type Creator = {
   _id: string;
   channelId: number;
   channelName: string;
   niche: string;
   subscriberCount: number;
-  viewCount: number;  
+  viewCount: number;
   profilePicture: string;
+  isPro?: boolean;
 };
 
 type Business = {
@@ -21,6 +21,7 @@ type Business = {
   email: string;
   website: string;
   licenseNumber: string;
+  verified?: boolean;
 };
 
 export default function MainPage() {
@@ -53,6 +54,7 @@ export default function MainPage() {
         } else if (type === "business") {
           const res = await fetch("/api/users");
           const data: Creator[] = await res.json();
+
           setCreators(data);
 
           const grouped: Record<string, Creator[]> = {};
@@ -63,6 +65,16 @@ export default function MainPage() {
             }
             grouped[nicheKey].push(creator);
           });
+
+          // Sort each niche group by isPro (true first)
+          for (const niche in grouped) {
+            grouped[niche].sort((a, b) => {
+              const aPro = a.isPro ? 1 : 0;
+              const bPro = b.isPro ? 1 : 0;
+              return bPro - aPro; // Pro creators first
+            });
+          }
+
           setGroupedCreators(grouped);
         }
       } catch (error) {
@@ -103,19 +115,36 @@ export default function MainPage() {
         {userType === "creator" ? "Explore Brands & Businesses" : "Explore Creators by Niche"}
       </h1>
 
-
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {userType === "creator" &&
           businesses.map((b, idx) => (
             <div
               key={idx}
               onClick={() => handleBrandClick(b._id)}
-              className="bg-gradient-to-br from-zinc-900 to-zinc-800 border border-zinc-700 p-5 rounded-2xl hover:shadow-xl hover:scale-[1.02] transition cursor-pointer text-white"
+              className="bg-[#1a1a1a] border border-gray-700 p-5 rounded-xl hover:bg-[#2a2a2a] hover:shadow-md transition cursor-pointer text-white"
             >
-              <h2 className="text-2xl font-bold">{b.name}</h2>
-              <p className="text-sm mt-2">Email: {b.email}</p>
-              <p className="text-sm">Website: {b.website}</p>
-              <p className="text-sm">License #: {b.licenseNumber}</p>
+              <h2 className="text-2xl font-bold mb-2">{b.name}</h2>
+              <div className="flex flex-wrap justify-between gap-x-6 gap-y-2 text-sm">
+                <p>Email: {b.email}</p>
+                <p>
+                  Website:{" "}
+                  <a
+                    href={b.website.startsWith("http") ? b.website : `https://${b.website}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-teal-400 hover:underline"
+                  >
+                    {b.website}
+                  </a>
+                </p>
+                <p>License #: {b.licenseNumber}</p>
+                <p>
+                  Verified:{" "}
+                  <span className={b.verified ? "text-green-400" : "text-red-400"}>
+                    {b.verified ? "Yes" : "No"}
+                  </span>
+                </p>
+              </div>
             </div>
           ))}
 
@@ -123,30 +152,36 @@ export default function MainPage() {
           Object.entries(groupedCreators).map(([niche, users]) => (
             <div
               key={niche}
-              className="bg-gradient-to-br from-zinc-900 to-zinc-800 border border-zinc-700 p-5 rounded-2xl hover:shadow-xl transition text-white"
+              className="bg-[#1a1a1a] border border-gray-700 p-5 rounded-xl hover:bg-[#2a2a2a] hover:shadow-md transition text-white"
             >
-              
               <h2 className="text-2xl font-bold mb-3">{capitalize(niche)}</h2>
-              <p className="mb-4 text-sm text-zinc-400">{users.length} creator{users.length > 1 ? "s" : ""}</p>
+              <p className="mb-4 text-sm text-zinc-300">
+                {users.length} creator{users.length > 1 ? "s" : ""}
+              </p>
 
               <div className="space-y-4">
                 {users.map((creator, idx) => (
                   <div
                     key={idx}
                     onClick={() => handleCreatorClick(creator.channelId)}
-                    className="flex items-center gap-4 p-3 rounded-xl hover:bg-zinc-700 transition cursor-pointer"
+                    className="flex items-center gap-4 p-3 rounded-lg hover:bg-[#333] transition cursor-pointer"
                   >
-
                     <img
                       src={creator.profilePicture}
                       alt={`${creator.channelName} profile`}
-                      className="w-14 h-14 rounded-full object-cover border-2 border-pink-500"
+                      className={`w-14 h-14 rounded-full object-cover border-2 ${creator.isPro ? "border-yellow-400" : "border-pink-500"}`}
                     />
-                    <div>
-                      <h3 className="text-lg font-semibold">{creator.channelName}</h3>
-                      <p className="text-sm text-zinc-400">Subs: {creator.subscriberCount}</p>
-                      <p className="text-sm text-zinc-400">Views: {creator.viewCount}</p>
-                      <p className="text-sm text-zinc-400">Niche: {creator.niche}</p>
+                    <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm">
+                      <div>
+                        <h3 className="text-lg font-semibold">
+                          {creator.channelName}
+                          {creator.isPro && <span className="ml-2 text-yellow-400 text-xs">PRO</span>}
+                        </h3>
+                      </div>
+                      <p>Subs: {creator.subscriberCount}</p>
+                      <p>Views: {creator.viewCount}</p>
+                      <p>Niche: {creator.niche}</p>
+          
                     </div>
                   </div>
                 ))}

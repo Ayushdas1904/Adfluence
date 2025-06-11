@@ -1,13 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import ChatMessage from '@/models/chatMessage';
-import {connectToDatabase} from '@/lib/db'; // your dbConnect.ts should connect to MongoDB
+import { connectToDatabase } from '@/lib/db';
 
 export async function POST(req: NextRequest) {
-  await connectToDatabase();
-  const { room, sender, receiver, message } = await req.json();
+  try {
+    await connectToDatabase();
+    const { room, sender, receiver, message } = await req.json();
 
-  const newMessage = new ChatMessage({ room, sender, receiver, message });
-  await newMessage.save();
+    if (!room || !sender || !receiver || !message) {
+      return NextResponse.json({ success: false, error: 'Missing fields' }, { status: 400 });
+    }
 
-  return NextResponse.json({ success: true });
+    const newMessage = new ChatMessage({ room, sender, receiver, message });
+    await newMessage.save();
+
+    return NextResponse.json({ success: true });
+  } catch (err : any) {
+    return NextResponse.json({ success: false, error: err.message }, { status: 500 });
+  }
 }

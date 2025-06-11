@@ -45,47 +45,46 @@ export default function AdminPage() {
       console.error("Verification failed");
     }
   };
-  
 
   return (
-    <div className="min-h-screen px-6 py-10 bg-gray-50 dark:bg-gray-900 transition-colors">
-      <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center">
+    <div className="min-h-screen px-6 py-10 bg-black text-white">
+      <h1 className="text-4xl font-extrabold mb-10 text-center text-gradient bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-indigo-600">
         Admin Panel - Business Verification
       </h1>
 
       {businesses.length === 0 ? (
-        <p className="text-center text-gray-600 dark:text-gray-300">
+        <p className="text-center text-gray-400">
           No businesses to show.
         </p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {businesses.map((b) => (
             <div
               key={b._id}
-              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 shadow hover:shadow-md transition-all"
+              className="bg-gradient-to-br from-black via-gray-800 to-black rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all"
             >
-              <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">{b.name}</h2>
-              <p className="text-gray-600 dark:text-gray-300 mb-1"><strong>Email:</strong> {b.email}</p>
-              <p className="text-gray-600 dark:text-gray-300 mb-1"><strong>Website:</strong> {b.website}</p>
-              <p className="text-gray-600 dark:text-gray-300 mb-1"><strong>License No:</strong> {b.licenseNumber}</p>
-              <p className="text-gray-600 dark:text-gray-300 mb-1">
+              <h2 className="text-2xl font-semibold text-white mb-2">{b.name}</h2>
+              <p className="text-gray-300 mb-2"><strong>Email:</strong> {b.email}</p>
+              <p className="text-gray-300 mb-2"><strong>Website:</strong> {b.website}</p>
+              <p className="text-gray-300 mb-2"><strong>License No:</strong> {b.licenseNumber}</p>
+              <p className="text-gray-300 mb-4">
                 <strong>Document:</strong>{" "}
-                <a href={b.document} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline hover:text-blue-600">
+                <a href={b.document} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline hover:text-blue-400">
                   View
                 </a>
               </p>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-gray-300 mb-4">
                 <strong>Status:</strong>{" "}
                 {b.verified ? (
-                  <span className="text-green-600 font-semibold">✅ Verified</span>
+                  <span className="text-green-500 font-semibold">✅ Verified</span>
                 ) : (
-                  <span className="text-red-600 font-semibold">❌ Not Verified</span>
+                  <span className="text-red-500 font-semibold">❌ Not Verified</span>
                 )}
               </p>
               {!b.verified && (
                 <button
                   onClick={() => handleVerify(b._id)}
-                  className="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded w-full"
+                  className="bg-gradient-to-r from-teal-500 to-indigo-500 hover:bg-gradient-to-l text-white font-semibold px-6 py-3 rounded-2xl w-full transition duration-200 ease-in-out"
                 >
                   Verify
                 </button>

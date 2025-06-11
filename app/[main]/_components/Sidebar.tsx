@@ -12,7 +12,6 @@ const Sidebar = () => {
   const menuItems = [
     { name: "Home", icon: Home, path: "/main" },
     { name: "Search", icon: Search, path: "/main/search" },
-    { name: "Notifications", icon: Bell, path: "/main/notifications" },
     { name: "Profile", icon: User, path: "/main/profile" },
   ];
 
