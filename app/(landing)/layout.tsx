@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import {
     useAuth
 } from "@clerk/nextjs";
-import Navbar from "./_components/Navbar";
+import Navbar from "./_components/navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
