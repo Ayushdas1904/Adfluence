@@ -38,8 +38,8 @@ export async function GET(req: NextRequest) {
     if (!business) {
       return NextResponse.json({ error: "Business not found" }, { status: 404 });
     }
-
-    const { password, ...businessData } = business;
+    
+    const { password: _, ...businessData } = business;
     return NextResponse.json(businessData, { status: 200 });
 
   } catch (err) {

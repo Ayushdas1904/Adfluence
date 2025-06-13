@@ -21,7 +21,7 @@ export default async function NichePage({ params }: { params: { niche: string } 
   return (
     <div className="min-h-screen w-full bg-gray-100 dark:bg-gray-900 p-6">
       <h1 className="text-3xl font-semibold mb-6 text-center text-gray-900 dark:text-white">
-        Creators in "{decodeURIComponent(niche)}"
+        Creators in &quot;{decodeURIComponent(niche)}&quot;
       </h1>
 
       {creators.length === 0 ? (

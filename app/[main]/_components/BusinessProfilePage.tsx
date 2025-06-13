@@ -2,10 +2,35 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { MessageLoading } from "@/components/ui/message-loading";
 import PayCreatorButton from "./PayCreatorButton";
+import Link from "next/link";
+import Image from "next/image";
+
+type Business = {
+  _id: string;
+  name: string;
+  email: string;
+  website: string;
+  licenseNumber: string;
+  verified: boolean;
+  document: string;
+};
+
+type Collaboration = {
+  _id: string;
+  creatorId: {
+    profilePicture?: string;
+    channelName?: string;
+    email?: string;
+  };
+  status: string;
+  paymentStatus: string;
+  createdAt: string;
+  agreementDetails?: string;
+};
 
 export default function BusinessProfilePage() {
-  const [business, setBusiness] = useState<any>(null);
-  const [collaborations, setCollaborations] = useState<any[]>([]);
+  const [business, setBusiness] = useState<Business | null>(null);
+  const [collaborations, setCollaborations] = useState<Collaboration[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -119,14 +144,14 @@ export default function BusinessProfilePage() {
         </div>
         <div className="space-y-1">
           <label className="text-sm font-medium text-gray-500 dark:text-gray-400">Website </label>
-          <a
+          <Link
             href={business.website}
             target="_blank"
             rel="noopener noreferrer"
             className="text-yellow-600 dark:text-yellow-400 hover:underline break-words"
           >
             {business.website}
-          </a>
+          </Link>
         </div>
         <div className="space-y-1">
           <label className="text-sm font-medium text-gray-500 dark:text-gray-400">License Number </label>
@@ -145,14 +170,14 @@ export default function BusinessProfilePage() {
         </div>
         <div className="space-y-1">
           <label className="text-sm font-medium text-gray-500 dark:text-gray-400">Uploaded Document </label>
-          <a
+          <Link
             href={business.document}
             target="_blank"
             rel="noopener noreferrer"
             className="text-yellow-600 dark:text-yellow-400 hover:underline"
           >
             View Document 📄
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -172,9 +197,12 @@ export default function BusinessProfilePage() {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <img
+                    <Image
                       src={collab.creatorId?.profilePicture || "/default-avatar.png"}
                       className="w-12 h-12 rounded-full border border-gray-300 dark:border-gray-600"
+                      alt={collab.creatorId?.channelName || "Unknown Creator"}
+                      width={48}
+                      height={48}
                     />
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white truncate">
                       {collab.creatorId?.channelName || "Unknown Creator"}

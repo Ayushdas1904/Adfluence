@@ -43,7 +43,7 @@ export default function CompleteProfile() {
       if (!res.ok) throw new Error("Failed to update profile");
 
       router.push("/main/profile");
-    } catch (err) {
+    } catch {
       setError("Error saving profile.");
     }
   };

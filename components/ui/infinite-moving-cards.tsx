@@ -23,22 +23,7 @@ export const InfiniteMovingCards = ({
   const scrollerRef = React.useRef<HTMLUListElement>(null);
   const [start, setStart] = useState(false);
 
-  useEffect(() => {
-    if (!scrollerRef.current || scrollerRef.current.children.length > items.length) return;
-
-    addAnimation();
-    
-    return () => {
-      if (scrollerRef.current) {
-        // Remove duplicated items on unmount
-        Array.from(scrollerRef.current.children).forEach((child, idx) => {
-          if (idx >= items.length) child.remove();
-        });
-      }
-    };
-  }, [items.length]); // Runs only when items change
-
-  function addAnimation() {
+  const addAnimation = React.useCallback(() => {
     if (containerRef.current && scrollerRef.current) {
       const scrollerContent = Array.from(scrollerRef.current.children);
 
@@ -53,7 +38,22 @@ export const InfiniteMovingCards = ({
       getSpeed();
       setStart(true);
     }
-  }
+  }, [direction, speed, items.length]);
+
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller || scroller.children.length > items.length) return;
+
+    addAnimation();
+
+    return () => {
+      if (scroller) {
+        Array.from(scroller.children).forEach((child, idx) => {
+          if (idx >= items.length) child.remove();
+        });
+      }
+    };
+  }, [items.length, addAnimation]);
 
   const getDirection = () => {
     if (containerRef.current) {

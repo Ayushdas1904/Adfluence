@@ -61,7 +61,7 @@ export default function OtherCreatorProfilePage() {
     <div className="flex flex-col min-h-screen w-full p-6 bg-white text-black dark:bg-black dark:text-white transition-colors duration-300">
       {/* Header Title */}
       <div className="text-4xl font-extrabold text-center mb-8 tracking-wide text-yellow-600 dark:text-yellow-400">
-        CREATOR'S PROFILE
+        CREATOR&apos;S PROFILE
       </div>
 
       {/* Profile Card */}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { MessageLoading } from "@/components/ui/message-loading";
+import Image from "next/image";
 
 type Creator = {
     _id: string;
@@ -148,7 +149,7 @@ export default function SearchPage() {
                                         className="flex flex-col bg-gradient-to-br from-zinc-900 to-zinc-800 border border-zinc-700 p-5 rounded-2xl hover:shadow-xl transition cursor-pointer text-white"
                                     >
                                         <div className="flex items-center gap-4">
-                                            <img
+                                            <Image
                                                 src={creator.profilePicture}
                                                 alt={`${creator.channelName} profile`}
                                                 className="w-14 h-14 rounded-full object-cover border-2 border-pink-500"

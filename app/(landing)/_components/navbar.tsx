@@ -1,9 +1,8 @@
 "use client";
 
 import ThemeToggle from "@/components/ThemeToggle";
-import { Button } from "@/components/ui/button";
-import BusinessSignupButton from "@/app/(landing)/_components/BusinessSignupButton";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -41,12 +40,12 @@ export default function Navbar() {
     checkStatus();
   }, []);
 
-  const handleLogout = async () => {
-    await fetch("/api/logout", { method: "POST" });
-    localStorage.removeItem("channelId");
-    router.push("/");
-    window.location.reload();
-  };
+  // const handleLogout = async () => {
+  //   await fetch("/api/logout", { method: "POST" });
+  //   localStorage.removeItem("channelId");
+  //   router.push("/");
+  //   window.location.reload();
+  // };
 
   return (
     <header className="bg-gray-300 text-black dark:bg-black dark:text-white p-4">
@@ -56,9 +55,9 @@ export default function Navbar() {
         </h1>
         <nav>
           <ul className="flex space-x-4 gap-4">
-            <li><a href="/" className="hover:underline">Home</a></li>
-            <li><a href="/about" className="hover:underline">About</a></li>
-            <li><a href="/contact" className="hover:underline">Contact</a></li>
+            <li><Link href="/" className="hover:underline">Home</Link></li>
+            <li><Link href="/about" className="hover:underline">About</Link></li>
+            <li><Link href="/contact" className="hover:underline">Contact</Link></li>
           </ul>
         </nav>
         <div className="flex items-center space-x-4">

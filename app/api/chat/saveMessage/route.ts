@@ -15,7 +15,11 @@ export async function POST(req: NextRequest) {
     await newMessage.save();
 
     return NextResponse.json({ success: true });
-  } catch (err : any) {
-    return NextResponse.json({ success: false, error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    let errorMsg = "Unknown error";
+    if (err instanceof Error) {
+      errorMsg = err.message;
+    }
+    return NextResponse.json({ success: false, error: errorMsg }, { status: 500 });
   }
 }

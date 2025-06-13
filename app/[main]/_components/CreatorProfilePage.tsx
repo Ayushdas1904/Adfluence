@@ -6,6 +6,12 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { MessageLoading } from "@/components/ui/message-loading";
 
+type Collaboration = {
+  _id: string;
+  brandName: string;
+  status: string;
+};
+
 export default function CreatorProfilePage() {
   const [profile, setProfile] = useState<{
     channelName: string;
@@ -17,8 +23,8 @@ export default function CreatorProfilePage() {
     isPro: boolean;
   } | null>(null);
 
-  const [collaborations, setCollaborations] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const [collaborations, setCollaborations] = useState<Collaboration[]>([]);
+  const [error] = useState<string | null>(null);
   const searchParams = useSearchParams();
 
   const capitalize = (name: string) => name.toUpperCase();
@@ -67,7 +73,7 @@ export default function CreatorProfilePage() {
     <div className="flex flex-col min-h-screen w-full p-6 bg-[#0e0e0e] text-white transition-colors duration-300">
       {/* Dashboard Title */}
       <div className="text-4xl font-extrabold text-center mb-8 tracking-wide text-yellow-400">
-        CREATOR'S DASHBOARD
+        CREATOR&apos;S DASHBOARD
       </div>
 
       {/* Header Section */}

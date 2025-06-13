@@ -13,14 +13,10 @@ import DemoScroll from "./_components/DemoScroll";
 import YoutubeLoginButton from "./_components/YoutubeLoginButton";
 import BusinessSignupButton from "./_components/BusinessSignupButton";
 
-const inter = Inter({ subsets: ["latin"], weight: ["600"] });
-const robotoMonoBold = Roboto_Mono({ subsets: ["latin"], weight: ["700"] });
-
 export default function LandingPage() {
     const router = useRouter();
     const searchParams = useSearchParams(); // ⬅️ Get URL query params
     const textRef = useRef(null);
-    const isInView = useInView(textRef, { once: true, margin: "-100px" });
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userType, setUserType] = useState<"creator" | "business" | null>(null);
@@ -43,7 +39,7 @@ export default function LandingPage() {
             // ✅ Remove tokens from URL
             router.replace("/", { scroll: false });
         }
-    }, [searchParams]);
+    }, [searchParams, router]);
 
     useEffect(() => {
         const checkStatus = async () => {

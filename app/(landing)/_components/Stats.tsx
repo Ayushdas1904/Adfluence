@@ -1,6 +1,5 @@
 "use client";
 import React from 'react';
-import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { InfiniteMovingCards } from "@/components//ui/infinite-moving-cards";
 
 const testimonials = [
@@ -34,16 +33,8 @@ export default function Stats() {
         <div className="flex justify-center">
             <InfiniteMovingCards
                 items={testimonials.map(({ quote, title }) => ({
-                    title: (
-                        <span className="text-neutral-800 dark:text-white ">
-                            {title}
-                        </span>
-                    ),
-                    quote: (
-                        <p className="text-neutral-600 dark:text-gray-300">
-                            {quote}
-                        </p>
-                    ),
+                    title, // pass as string
+                    quote, // pass as string
                 }))}
                 direction="left"
                 speed="fast"

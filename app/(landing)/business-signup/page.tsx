@@ -3,15 +3,24 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+type BusinessForm = {
+  name: string;
+  email: string;
+  password: string;
+  website: string;
+  licenseNumber: string;
+  document: File | null;
+};
+
 export default function BusinessSignup() {
   const router = useRouter();
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<BusinessForm>({
     name: "",
     email: "",
     password: "",
     website: "",
     licenseNumber: "",
-    document: null as File | null,
+    document: null,
   });
 
   const [loading, setLoading] = useState(false);
@@ -53,7 +62,7 @@ export default function BusinessSignup() {
         const text = await res.text();
         setMsg(text);
       }
-    } catch (err) {
+    } catch {
       setMsg("Something went wrong.");
     } finally {
       setLoading(false);
@@ -82,7 +91,7 @@ export default function BusinessSignup() {
             name={name}
             type={type || "text"}
             placeholder={placeholder}
-            value={(form as any)[name]}
+            value={form[name as keyof BusinessForm] as string}
             onChange={handleChange}
             required
             className="w-full px-4 py-3 border rounded-lg bg-white dark:bg-neutral-900 dark:text-white dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-blue-600 transition"

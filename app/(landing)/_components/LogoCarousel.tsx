@@ -4,8 +4,6 @@ import { Logos3 } from "@/components/logos3"
 import nike from '@/public/nike.svg'
 import adidas from '@/public/adidas.svg'
 import redbull from '@/public/redbull.svg'
-import myprotein from '@/public/myprotein.svg'
-import loreal from '@/public/loreal.png'
 import tinder from '@/public/tinder.svg'
 import swiggy from '@/public/swiggy.svg'
 import uber from '@/public/uber.svg'
@@ -64,12 +62,7 @@ const demoData = {
             image: discord.src,
             className: "h-7 w-auto",
         },
-        {
-            id: "logo-8",
-            description: "Monster Energy",
-            image: "https://www.monsterenergy.com/img/home/monster-logo.png",
-            className: "h-7 w-auto",
-        },
+        
     ],
 };
 

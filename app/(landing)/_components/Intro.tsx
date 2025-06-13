@@ -4,7 +4,6 @@ import { Roboto_Mono } from "next/font/google";
 import { Typewriter } from "@/components/ui/Typewriter";
 import { Hero } from "@/components/ui/animated-hero";
 
-const robotoMonoBold = Roboto_Mono({ subsets: ["latin"], weight: ["700"] });
 const robotoMonoThin = Roboto_Mono({ subsets: ["latin"], weight: ["400"] });
 
 export function Intro() {

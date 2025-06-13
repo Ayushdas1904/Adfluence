@@ -2,6 +2,18 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/db";
 import { User } from "@/models/user";
 
+interface UpdateData {
+  channelId: string;
+  channelName: string;
+  profilePicture: string;
+  accessToken: string;
+  expiresAt: number;
+  subscriberCount: number;
+  viewCount: number;
+  videoCount: number;
+  refreshToken?: string;
+}
+
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
   if (!code) {
@@ -48,7 +60,7 @@ export async function GET(req: NextRequest) {
 
     // 🌟 Extract channel details
     const channel = userData.items[0];
-    const updateData: any = {
+    const updateData: UpdateData = {
       channelId: channel.id,
       channelName: channel.snippet.title,
       profilePicture: channel.snippet.thumbnails.high.url,

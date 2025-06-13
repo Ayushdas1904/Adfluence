@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { MessageLoading } from "@/components/ui/message-loading";
+import Link from "next/link";
+import Image from "next/image";
 
 type Creator = {
   _id: string;
@@ -26,7 +28,6 @@ type Business = {
 
 export default function MainPage() {
   const [userType, setUserType] = useState<"creator" | "business" | null>(null);
-  const [creators, setCreators] = useState<Creator[]>([]);
   const [groupedCreators, setGroupedCreators] = useState<Record<string, Creator[]>>({});
   const [businesses, setBusinesses] = useState<Business[]>([]);
   const [brandId, setBrandId] = useState<string | null>(null);
@@ -54,8 +55,6 @@ export default function MainPage() {
         } else if (type === "business") {
           const res = await fetch("/api/users");
           const data: Creator[] = await res.json();
-
-          setCreators(data);
 
           const grouped: Record<string, Creator[]> = {};
           data.forEach((creator) => {
@@ -128,14 +127,14 @@ export default function MainPage() {
                 <p>Email: {b.email}</p>
                 <p>
                   Website:{" "}
-                  <a
+                  <Link
                     href={b.website.startsWith("http") ? b.website : `https://${b.website}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-teal-400 hover:underline"
                   >
                     {b.website}
-                  </a>
+                  </Link>
                 </p>
                 <p>License #: {b.licenseNumber}</p>
                 <p>
@@ -166,7 +165,7 @@ export default function MainPage() {
                     onClick={() => handleCreatorClick(creator.channelId)}
                     className="flex items-center gap-4 p-3 rounded-lg hover:bg-[#333] transition cursor-pointer"
                   >
-                    <img
+                    <Image
                       src={creator.profilePicture}
                       alt={`${creator.channelName} profile`}
                       className={`w-14 h-14 rounded-full object-cover border-2 ${creator.isPro ? "border-yellow-400" : "border-pink-500"}`}

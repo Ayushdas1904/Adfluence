@@ -1,6 +1,6 @@
 'use client'
 
-import { Home, Search, Bell, User } from "lucide-react";
+import { Home, Search, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import ThemeToggle from "@/components/ThemeToggle";

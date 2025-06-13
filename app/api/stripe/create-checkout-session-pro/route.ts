@@ -38,8 +38,14 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ url: session.url });
-  } catch (err: any) {
-    console.error("Stripe session error:", err.message);
-    return NextResponse.json({ error: "Stripe session failed" }, { status: 500 });
+  } catch (err: unknown) {
+    let errorMsg = "Stripe session failed";
+    if (err instanceof Error) {
+      console.error("Stripe session error:", err.message);
+      errorMsg = err.message;
+    } else {
+      console.error("Stripe session error:", err);
+    }
+    return NextResponse.json({ error: errorMsg }, { status: 500 });
   }
 }
