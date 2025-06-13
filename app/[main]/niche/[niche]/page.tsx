@@ -6,18 +6,17 @@ type Creator = {
   subscriberCount: number;
 };
 
-export default async function NichePage({
-  params,
-}: {
-  params: { niche: string };
-}) {
+type NichePageProps = {
+  params: {
+    niche: string;
+  };
+};
+
+export default async function NichePage({ params }: NichePageProps) {
   const { niche } = params;
 
-  // Fetch creators of the given niche
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/users?niche=${encodeURIComponent(
-      niche
-    )}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/users?niche=${encodeURIComponent(niche)}`,
     {
       cache: "no-store",
     }
