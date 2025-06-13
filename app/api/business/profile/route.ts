@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "Business not found" }, { status: 404 });
     }
     
-    const { password: _, ...businessData } = business;
+    const { password, ...businessData } = business;
     return NextResponse.json(businessData, { status: 200 });
 
   } catch (err) {

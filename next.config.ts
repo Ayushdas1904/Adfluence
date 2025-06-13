@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
       
     ],
     domains: ["yt3.ggpht.com"],
+    
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 };
 

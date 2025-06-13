@@ -5,9 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import { Intro } from "./_components/Intro";
 import Stats from "./_components/Stats";
 import LogoCarousel from "./_components/LogoCarousel";
-import { Inter, Roboto_Mono } from "next/font/google";
 import { Button } from "@/components/ui/button";
-import { motion, useInView } from "framer-motion";
+import { motion} from "framer-motion";
 import { LampContainer } from "@/components/ui/lamp";
 import DemoScroll from "./_components/DemoScroll";
 import YoutubeLoginButton from "./_components/YoutubeLoginButton";
@@ -16,7 +15,6 @@ import BusinessSignupButton from "./_components/BusinessSignupButton";
 export default function LandingPage() {
     const router = useRouter();
     const searchParams = useSearchParams(); // ⬅️ Get URL query params
-    const textRef = useRef(null);
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userType, setUserType] = useState<"creator" | "business" | null>(null);
