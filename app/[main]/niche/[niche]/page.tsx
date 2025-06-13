@@ -6,13 +6,22 @@ type Creator = {
   subscriberCount: number;
 };
 
-export default async function NichePage({ params }: { params: { niche: string } }) {
+export default async function NichePage({
+  params,
+}: {
+  params: { niche: string };
+}) {
   const { niche } = params;
 
   // Fetch creators of the given niche
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users?niche=${encodeURIComponent(niche)}`, {
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/users?niche=${encodeURIComponent(
+      niche
+    )}`,
+    {
+      cache: "no-store",
+    }
+  );
 
   if (!res.ok) return notFound();
 
@@ -25,7 +34,9 @@ export default async function NichePage({ params }: { params: { niche: string } 
       </h1>
 
       {creators.length === 0 ? (
-        <p className="text-center text-gray-600 dark:text-gray-400">No creators found in this niche.</p>
+        <p className="text-center text-gray-600 dark:text-gray-400">
+          No creators found in this niche.
+        </p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {creators.map((c, idx) => (
@@ -33,9 +44,15 @@ export default async function NichePage({ params }: { params: { niche: string } 
               key={idx}
               className="bg-white dark:bg-gray-800 p-5 rounded shadow hover:shadow-lg transition"
             >
-              <h2 className="text-xl font-bold text-gray-800 dark:text-white">{c.channelName}</h2>
-              <p className="text-gray-600 dark:text-gray-300">Niche: {c.niche}</p>
-              <p className="text-gray-600 dark:text-gray-300">Followers: {c.subscriberCount}</p>
+              <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+                {c.channelName}
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300">
+                Niche: {c.niche}
+              </p>
+              <p className="text-gray-600 dark:text-gray-300">
+                Followers: {c.subscriberCount}
+              </p>
             </div>
           ))}
         </div>
