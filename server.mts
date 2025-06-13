@@ -1,7 +1,6 @@
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import next from 'next';
-import mongoose from 'mongoose';
 import ChatMessage from './models/chatMessage';
 
 const dev = process.env.NODE_ENV !== 'production';

@@ -9,7 +9,6 @@ import { Inter, Roboto_Mono } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import { motion, useInView } from "framer-motion";
 import { LampContainer } from "@/components/ui/lamp";
-import MacbookScroll from "@/components/ui/MacbookScroll";
 import DemoScroll from "./_components/DemoScroll";
 import YoutubeLoginButton from "./_components/YoutubeLoginButton";
 import BusinessSignupButton from "./_components/BusinessSignupButton";

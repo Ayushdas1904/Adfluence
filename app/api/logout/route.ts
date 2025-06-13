@@ -4,7 +4,7 @@ import { connectToDatabase } from "@/lib/db";
 import { User } from "@/models/user"; // your user model
 import { cookies } from "next/headers";
 
-export async function POST(req: Request) {
+export async function POST() {
   const cookieStore = cookies();
   const channelId = (await cookieStore).get("channelId")?.value;
 

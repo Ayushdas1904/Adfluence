@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const authUrl = new URL("https://accounts.google.com/o/oauth2/auth");
 
   authUrl.searchParams.set("client_id", process.env.NEXT_PUBLIC_YOUTUBE_CLIENT_ID!);
