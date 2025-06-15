@@ -4,9 +4,8 @@ import { NextRequest } from "next/server";
 
 export async function PATCH(
   req: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
-  const { params } = context;
   await connectToDatabase();
 
   await Business.findByIdAndUpdate(params.id, { verified: true });
