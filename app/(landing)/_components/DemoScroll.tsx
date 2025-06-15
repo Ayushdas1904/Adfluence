@@ -2,7 +2,8 @@
 import React from "react";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import Image from "next/image";
-import macbook from '@/public/macbook.png'
+import dashboard from "@/public/dashboard.png"; // Adjust the path as necessary
+
 
 export default function DemoScroll() {
   return (
@@ -21,7 +22,7 @@ export default function DemoScroll() {
         }
       >
         <Image
-          src={macbook}
+          src={dashboard}
           alt="hero"
           height={720}
           width={1400}

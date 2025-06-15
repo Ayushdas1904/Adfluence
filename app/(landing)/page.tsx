@@ -129,8 +129,9 @@ export default function LandingPage() {
 
             <Stats />
             <LogoCarousel />
+            <br /><br /><br />
 
-            <LampContainer>
+            {/* <LampContainer>
                 <motion.h1
                     initial={{ opacity: 0.5, y: 100 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -139,7 +140,7 @@ export default function LandingPage() {
                 >
                     Creator Discovery <br /> Powered by AI
                 </motion.h1>
-            </LampContainer>
+            </LampContainer> */}
 
             <DemoScroll />
         </section>

@@ -1,19 +1,15 @@
 "use client";
 
 import { ReactNode, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import {
+    useAuth
+} from "@clerk/nextjs";
 import Navbar from "./_components/navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function LandingLayout({ children }: { children: ReactNode }) {
-    // const router = useRouter();
-    // const { isSignedIn } = useAuth(); // Get Clerk auth state
-
-    // useEffect(() => {
-    //     if (isSignedIn) {
-    //         router.push("/main"); // Redirect to main page
-    //     }
-    // }, [isSignedIn, router]);
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);

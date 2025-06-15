@@ -98,11 +98,11 @@ export const InfiniteMovingCards = ({
           >
             <blockquote>
               <div>
-                <span className="leading-[1.6] text-gray-200 font-bold text-3xl">
+                <span className="leading-[1.6] text-black dark:text-white font-bold text-3xl">
                   {item.title}
                 </span>
               </div>
-              <span className="relative z-20 text-sm leading-[1.6] text-gray-100 font-normal">
+              <span className="relative z-20 text-sm leading-[1.6] text-black dark:text-white font-normal">
                 {item.quote}
               </span>
             </blockquote>

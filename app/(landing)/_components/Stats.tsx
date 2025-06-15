@@ -32,12 +32,12 @@ export default function Stats() {
     return (
         <div className="flex justify-center">
             <InfiniteMovingCards
-                items={testimonials.map(({ quote, title }) => ({
-                    title, // pass as string
-                    quote, // pass as string
-                }))}
-                direction="left"
-                speed="fast"
+            items={testimonials.map(({ quote, title }) => ({
+                title, // pass as string
+                quote, // pass as string
+            }))}
+            direction="left"
+            speed="fast"
             />
         </div>
     );
