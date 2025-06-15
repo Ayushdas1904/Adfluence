@@ -1,10 +1,10 @@
+// app/api/stripe/webhook/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { buffer } from 'micro'; // 👈 required to get raw body
 import { connectToDatabase } from '@/lib/db';
 import { Collaboration } from '@/models/collaboration';
-import { User } from '@/models/user'; // assuming you have this model
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+import { User } from '@/models/user';
 
 export const config = {
   api: {
@@ -12,115 +12,57 @@ export const config = {
   },
 };
 
-export const runtime = 'nodejs';
+export const runtime = 'nodejs'; // Ensure it's running on the edge/server
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export async function POST(req: NextRequest) {
-  const sig = req.headers.get('Stripe-Signature')!;
-  const body = await req.text(); // raw body is required for webhook validation
+  const rawBody = await req.text(); // Required to keep raw format
+  const sig = req.headers.get('stripe-signature')!;
 
   let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(
-      body,
+      rawBody,
       sig,
       process.env.STRIPE_WEBHOOK_SECRET!
     );
-  } catch (err: unknown) {
-    let message = "Webhook signature verification failed.";
-    if (err instanceof Error) {
-      console.error('Webhook signature verification failed:', err.message);
-      message = err.message;
-    } else {
-      console.error('Webhook signature verification failed:', err);
-    }
-    return NextResponse.json(
-      { error: message },
-      { status: 400 }
-    );
+  } catch (err) {
+    console.error('Webhook signature verification failed:', err);
+    return new NextResponse('Webhook signature verification failed', { status: 400 });
   }
 
+  // ✅ Handle event
   if (event.type === 'checkout.session.completed') {
     try {
-      const session: Stripe.Checkout.Session = event.data.object;
-      const paymentType = session.metadata?.paymentType;
+      const session = event.data.object as Stripe.Checkout.Session;
 
-      if (!paymentType) {
-        console.error('Missing paymentType in metadata:', session.metadata);
-        return NextResponse.json(
-          { error: 'Missing payment type in metadata' },
-          { status: 400 }
-        );
-      }
+      const paymentType = session.metadata?.paymentType;
 
       await connectToDatabase();
 
       if (paymentType === 'collab') {
         const collaborationId = session.metadata?.collaborationId;
-        console.log('Received collaborationId:', collaborationId);
+        const collaboration = await Collaboration.findById(collaborationId);
 
-        if (!collaborationId) {
-          console.error('No collaborationId found in session metadata:', session.metadata);
-          return NextResponse.json(
-            { error: 'Collaboration ID not found in metadata' },
-            { status: 400 }
-          );
+        if (collaboration) {
+          collaboration.paymentStatus = 'Paid';
+          collaboration.status = 'completed';
+          collaboration.updatedAt = new Date();
+          await collaboration.save();
         }
-
-        const collaboration = await Collaboration.findById(collaborationId).exec();
-
-        if (!collaboration) {
-          console.error('Collaboration not found for ID:', collaborationId);
-          return NextResponse.json(
-            { error: 'Collaboration not found' },
-            { status: 404 }
-          );
-        }
-
-        collaboration.paymentStatus = 'Paid';
-        collaboration.status = 'completed';
-        collaboration.updatedAt = new Date();
-        await collaboration.save();
-
-        if (process.env.NODE_ENV !== 'production') {
-          console.log('✅ Collaboration updated after payment:', collaborationId);
-        }
-
       } else if (paymentType === 'subscription') {
         const channelId = session.metadata?.channelId;
-
-        if (!channelId) {
-          console.error('Missing channelId for subscription:', session.metadata);
-          return NextResponse.json(
-            { error: 'Channel ID missing in metadata' },
-            { status: 400 }
-          );
-        }
-
-        const user = await User.findOneAndUpdate(
-          { channelId },
-          { isPro: true },
-          { new: true }
-        );
-
-        if (!user) {
-          console.error('User not found for channelId:', channelId);
-          return NextResponse.json(
-            { error: 'User not found' },
-            { status: 404 }
-          );
-        }
-
-        if (process.env.NODE_ENV !== 'production') {
-          console.log('✅ User upgraded to Pro:', channelId);
-        }
+        await User.findOneAndUpdate({ channelId }, { isPro: true });
       }
 
-    } catch (error) {
-      console.error('Error processing checkout.session.completed:', error);
-      return NextResponse.json({ error: 'Server error' }, { status: 500 });
+      return new NextResponse(JSON.stringify({ received: true }), { status: 200 });
+    } catch (err) {
+      console.error('Error processing event:', err);
+      return new NextResponse('Error handling event', { status: 500 });
     }
   }
 
-  return NextResponse.json({ received: true }, { status: 200 });
+  return new NextResponse('Unhandled event type', { status: 200 });
 }
