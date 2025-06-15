@@ -153,7 +153,13 @@ export default function MainPage() {
               key={niche}
               className="bg-[#1a1a1a] border border-gray-700 p-5 rounded-xl hover:bg-[#2a2a2a] hover:shadow-md transition text-white"
             >
-              <h2 className="text-2xl font-bold mb-3">{capitalize(niche)}</h2>
+              {/* <h2 className="text-2xl font-bold mb-3">{capitalize(niche)}</h2> */}
+              <Link href={`/main/niche/${encodeURIComponent(niche)}`}>
+                <h2 className="text-2xl font-bold mb-3 hover:underline text-teal-400 cursor-pointer">
+                  {capitalize(niche)}
+                </h2>
+              </Link>
+
               <p className="mb-4 text-sm text-zinc-300">
                 {users.length} creator{users.length > 1 ? "s" : ""}
               </p>
@@ -169,6 +175,8 @@ export default function MainPage() {
                       src={creator.profilePicture}
                       alt={`${creator.channelName} profile`}
                       className={`w-14 h-14 rounded-full object-cover border-2 ${creator.isPro ? "border-yellow-400" : "border-pink-500"}`}
+                      width={56}
+                      height={56}
                     />
                     <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm">
                       <div>
@@ -180,7 +188,7 @@ export default function MainPage() {
                       <p>Subs: {creator.subscriberCount}</p>
                       <p>Views: {creator.viewCount}</p>
                       <p>Niche: {creator.niche}</p>
-          
+
                     </div>
                   </div>
                 ))}

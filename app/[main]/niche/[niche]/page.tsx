@@ -6,15 +6,15 @@ type Creator = {
   subscriberCount: number;
 };
 
-export default async function NichePage({
-  params,
-}: {
-  params: { niche: string };
-}) {
-  const { niche } = params;
+export default async function NichePage(props: { params: { niche?: string } }) {
+  const nicheParam = props?.params?.niche;
+
+  if (!nicheParam) return notFound(); // extra safety
+
+  const decodedNiche = decodeURIComponent(nicheParam);
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/users?niche=${encodeURIComponent(niche)}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/users?niche=${encodeURIComponent(decodedNiche)}`,
     { cache: "no-store" }
   );
 
@@ -25,7 +25,7 @@ export default async function NichePage({
   return (
     <div className="min-h-screen w-full bg-gray-100 dark:bg-gray-900 p-6">
       <h1 className="text-3xl font-semibold mb-6 text-center text-gray-900 dark:text-white">
-        Creators in &quot;{decodeURIComponent(niche)}&quot;
+        Creators in &quot;{decodedNiche}&quot;
       </h1>
 
       {creators.length === 0 ? (
