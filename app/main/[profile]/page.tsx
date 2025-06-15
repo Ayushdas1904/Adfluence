@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import CreatorProfilePage from "@/app/[main]/_components/CreatorProfilePage";
-import BusinessProfilePage from "@/app/[main]/_components/BusinessProfilePage";
+import CreatorProfilePage from "@/app/main/_components/CreatorProfilePage";
+import BusinessProfilePage from "@/app/main/_components/BusinessProfilePage";
 
 export default function ProfilePage() {
   const router = useRouter();

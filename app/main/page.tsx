@@ -153,13 +153,12 @@ export default function MainPage() {
               key={niche}
               className="bg-[#1a1a1a] border border-gray-700 p-5 rounded-xl hover:bg-[#2a2a2a] hover:shadow-md transition text-white"
             >
-              {/* <h2 className="text-2xl font-bold mb-3">{capitalize(niche)}</h2> */}
-              <Link href={`/main/niche/${encodeURIComponent(niche)}`}>
+              <h2 className="text-2xl font-bold mb-3">{capitalize(niche)}</h2>
+              {/* <Link href={`/niche/${encodeURIComponent(niche)}`}>
                 <h2 className="text-2xl font-bold mb-3 hover:underline text-teal-400 cursor-pointer">
                   {capitalize(niche)}
                 </h2>
-              </Link>
-
+              </Link> */}
               <p className="mb-4 text-sm text-zinc-300">
                 {users.length} creator{users.length > 1 ? "s" : ""}
               </p>
