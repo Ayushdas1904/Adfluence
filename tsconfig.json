@@ -6,6 +6,7 @@
       "dom.iterable",
       "esnext"
     ],
+    "types": ["next/types/global"], //added right now
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
