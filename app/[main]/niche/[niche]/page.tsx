@@ -1,3 +1,4 @@
+// app/[main]/niche/[niche]/page.tsx
 import { notFound } from "next/navigation";
 
 type Creator = {
@@ -6,20 +7,16 @@ type Creator = {
   subscriberCount: number;
 };
 
-type NichePageProps = {
-  params: {
-    niche: string;
-  };
+type Props = {
+  params: { niche: string };
 };
 
-export default async function NichePage({ params }: NichePageProps) {
+export default async function NichePage({ params }: Props) {
   const { niche } = params;
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/users?niche=${encodeURIComponent(niche)}`,
-    {
-      cache: "no-store",
-    }
+    { cache: "no-store" }
   );
 
   if (!res.ok) return notFound();
@@ -46,9 +43,7 @@ export default async function NichePage({ params }: NichePageProps) {
               <h2 className="text-xl font-bold text-gray-800 dark:text-white">
                 {c.channelName}
               </h2>
-              <p className="text-gray-600 dark:text-gray-300">
-                Niche: {c.niche}
-              </p>
+              <p className="text-gray-600 dark:text-gray-300">Niche: {c.niche}</p>
               <p className="text-gray-600 dark:text-gray-300">
                 Followers: {c.subscriberCount}
               </p>
