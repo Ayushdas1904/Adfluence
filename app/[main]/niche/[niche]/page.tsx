@@ -1,4 +1,3 @@
-// app/[main]/niche/[niche]/page.tsx
 import { notFound } from "next/navigation";
 
 type Creator = {
@@ -7,11 +6,11 @@ type Creator = {
   subscriberCount: number;
 };
 
-type Props = {
+export default async function NichePage({
+  params,
+}: {
   params: { niche: string };
-};
-
-export default async function NichePage({ params }: Props) {
+}) {
   const { niche } = params;
 
   const res = await fetch(
