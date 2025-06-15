@@ -7,7 +7,8 @@
         "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
         "client_secret": "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",
         "redirect_uris": [
-            "http://localhost:3000/api/auth/youtube"
+            "http://localhost:3000/api/auth/youtube",
+            "https://adfluence-eosin.vercel.app/api/auth/youtube"
         ]
     }
 }
