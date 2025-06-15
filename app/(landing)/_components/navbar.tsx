@@ -53,13 +53,13 @@ export default function Navbar() {
         <h1 className="text-xl font-bold cursor-pointer" onClick={() => router.push("/")}>
           ADfluence
         </h1>
-        <nav>
+        {/* <nav>
           <ul className="flex space-x-4 gap-4">
             <li><Link href="/" className="hover:underline">Home</Link></li>
             <li><Link href="/about" className="hover:underline">About</Link></li>
             <li><Link href="/contact" className="hover:underline">Contact</Link></li>
           </ul>
-        </nav>
+        </nav> */}
         <div className="flex items-center space-x-4">
           <ThemeToggle />
           {isLoggedIn && profile ? (
