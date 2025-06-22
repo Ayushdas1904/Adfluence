@@ -50,13 +50,14 @@ export default function Navbar() {
   return (
     <header className="bg-gray-300 text-black dark:bg-black dark:text-white p-4">
 
-        <Image
+        {/* <Image
           src="/adfluence.png"
           alt="ADfluence Logo"
           width={200}
           height={200}
           className="rounded-full dark:invert fixed left-0 top-[-40px]"
-        />
+        /> */}
+        <h1 className="text-3xl font-bold tracking-tight fixed left-10 top-10 select-none">ADfluence</h1>
 
         <div className="flex items-center space-x-4 fixed right-10 top-10">
           <ThemeToggle />
