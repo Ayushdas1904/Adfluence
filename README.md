@@ -48,21 +48,14 @@ Built with **Next.js App Router (frontend & backend)** using **YouTube OAuth**, 
 
 ```
 
-adfluence/
-├── client/                  # Next.js App Router frontend
-│   ├── app/
-│   ├── components/
-│   ├── lib/
-│   └── public/
-│
-├── server/                  # Express.js backend
-│   ├── index.js
-│   ├── routes/
-│   ├── controllers/
-│   └── models/
-│
-├── .env.local               # Frontend env
-├── server/.env              # Backend env
+adfluence/              
+├── app/
+├── components/
+├── lib/
+├── hooks/
+└── public/             
+├── types
+├── .env.local           
 └── README.md
 
 ````
